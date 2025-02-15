@@ -1,0 +1,38 @@
+https://colab.research.google.com/drive/1Q2aSR2jyXLQrcxh6uA86VeevKJ8MWyQl#scrollTo=uvrrRgJP91zU
+
+
+
+A meta-model refers to a machine learning model that combines the outputs (predictions) of multiple base models to make final predictions. It sits on top of the base models in a model stacking or ensemble learning framework and learns to weigh or integrate their predictions optimally.
+
+Key Characteristics of a Meta-Model
+Purpose:
+
+To combine the predictions of base models and improve the overall performance.
+It captures patterns and errors that individual models may miss.
+Input to Meta-Model:
+
+The meta-model does not directly use raw input features (e.g., X_train or X_test).
+Instead, it uses the predictions or transformed outputs from base models as its input features (also called meta-features).
+Output:
+
+The final predictions are the output of the meta-model.
+
+Step 2: Create Meta-Model Input
+The outputs from the base models are combined to create new "meta-features":
+train_meta_features: A matrix combining predictions from DeepFM and LightGBM for the training set.
+test_meta_features: A matrix combining predictions from DeepFM and LightGBM for the test set.
+
+Train the Meta-Model
+GradientBoostingRegressor is chosen as the meta-model:
+It is trained using train_meta_features as input and the true labels (y_train) as the target variable.
+This model learns how to combine the predictions from the base models to optimize performance.
+
+Advantages of the Hybrid Approach
+Enhanced Performance: The meta-model learns to combine the strengths of both base models.
+Robustness: Reduces the likelihood of overfitting to a single model’s biases.
+Scalability: Additional models can be incorporated into the meta-features in the future.
+
+Summary of Data Flow
+Raw Data (X_train, X_test) → Base Models → Predictions (train_pred_deepfm, train_pred_lgb, etc.).
+Predictions → Stacked Together → Input to Meta-Model.
+Meta-Model → Final Predictions → Evaluation and Saving.
